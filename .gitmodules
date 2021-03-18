@@ -1,0 +1,3 @@
+[submodule "groove-multichannel-gas-sensor-micropyton"]
+	path = groove-multichannel-gas-sensor-micropyton
+	url = https://github.com/aparcar/groove-multichannel-gas-sensor-micropyton
