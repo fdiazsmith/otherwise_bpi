@@ -130,7 +130,7 @@ class Gas:
         data = self.read_block(self.GM_702B, 4)
         # print("getting reading from sensor getGM702B", data)
         return data
-    def close()
+    def close(self):
         self.i2c.close()
 
 
