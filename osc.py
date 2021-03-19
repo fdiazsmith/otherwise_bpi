@@ -2,6 +2,7 @@
 '''
 BREADCRUMS
 -[More on osc4py3 here](https://osc4py3.readthedocs.io/en/latest/userdoc.html#complicated-to-use)
+-[Might need to know more about this](https://learn.adafruit.com/porting-an-arduino-library-to-circuitpython-vl6180x-distance-sensor?view=all)
 '''
 #  Import needed modules from osc4py3
 from osc4py3.as_eventloop import *

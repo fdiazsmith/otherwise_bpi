@@ -97,7 +97,7 @@ class Gas:
             self.preheat()
         
         self.write(self.GM_102B)
-        data = self.read_block(self.GM_102B, 2)
+        data = self.read_block(self.GM_102B, 1)
         # print("getting reading from sensor getGM102B", data)
         return data 
     
@@ -107,7 +107,7 @@ class Gas:
             self.preheat()
         
         self.write(self.GM_302B)
-        data = self.read_block(self.GM_302B, 2)
+        data = self.read_block(self.GM_302B, 1)
         # print("getting reading from sensor getGM302B", data)
         return data
     
@@ -117,7 +117,7 @@ class Gas:
             self.preheat()
         
         self.write(self.GM_502B)
-        data = self.read_block(self.GM_502B, 2)
+        data = self.read_block(self.GM_502B, 1)
         # print("getting reading from sensor getGM502B", data)
         return data
     
@@ -127,7 +127,7 @@ class Gas:
             self.preheat()
         
         self.write(self.GM_702B)
-        data = self.read_block(self.GM_702B, 2)
+        data = self.read_block(self.GM_702B, 1)
         # print("getting reading from sensor getGM702B", data)
         return data
     def close(self):
