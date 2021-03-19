@@ -1,44 +1,59 @@
-# Import needed modules from osc4py3
+#!/usr/bin/env python
+'''
+BREADCRUMS
+-[More on osc4py3 here](https://osc4py3.readthedocs.io/en/latest/userdoc.html#complicated-to-use)
+'''
+#  Import needed modules from osc4py3
 from osc4py3.as_eventloop import *
 from osc4py3 import oscbuildparse
+#general utils
 import time
+import math
+# groove gas
+from smbus2 import SMBus
+from grooveGas import Gas
 
-# Start the system.
+print("OTHERWISE sensing")
+#OSC: Start the OSC system.
 osc_startup()
-
-# Make client channels to send packets.
+#OSC: Make client channels to send packets.
 osc_udp_client("192.168.1.133", 10000, "touchdesigner")
 
-# Build a simple message and send it.
-msg = oscbuildparse.OSCMessage("/test/me", ",sif", ["text", 672, 8.871])
-osc_send(msg, "touchdesigner")
+i2c = SMBus(1)
 
-# Build a message with autodetection of data types, and send it.
-msg = oscbuildparse.OSCMessage("/test/me", None, ["text", 672, 8.871])
-osc_send(msg, "touchdesigner")
+g = Gas(i2c)
 
-# Buils a complete bundle, and postpone its executions by 10 sec.
-exectime = time.time() + 30   # execute in 10 seconds
-msg1 = oscbuildparse.OSCMessage("/sound/levels", None, [1, 5, 3])
-msg2 = oscbuildparse.OSCMessage("/sound/bits", None, [32])
-msg3 = oscbuildparse.OSCMessage("/sound/freq", None, [42000])
-bun = oscbuildparse.OSCBundle(oscbuildparse.OSC_IMMEDIATELY ,
-                    [msg1, msg2, msg3])
-osc_send(bun, "touchdesigner")
-
-# Periodically call osc4py3 processing method in your event loop.
-finished = False
-while not finished:
-    # You can send OSC messages from your event loop too…
-    # …
+def main():
+    '''
+    Main program function
+    '''
+    #get gas readigns
+    gm1 = g.getGM102B()
+    gm1v= g.calcVol(gm1) 
+    gm3 = g.getGM302B()
+    gm3v= g.calcVol(gm3) 
+    gm5 = g.getGM502B()
+    gm5v= g.calcVol(gm5) 
+    gm7 = g.getGM702B()
+    gm7v= g.calcVol(gm7)
+    # send them to Tochdesinger
     osc_process()
-    msg1 = oscbuildparse.OSCMessage("/sound/levels", None, [1, 5, 3])
-    msg2 = oscbuildparse.OSCMessage("/sound/bits", None, [32])
-    msg3 = oscbuildparse.OSCMessage("/sound/freq", None, [time.time()*.002])
+    msg1 = oscbuildparse.OSCMessage("/gas/NO2", None, [gm1v])
+    msg2 = oscbuildparse.OSCMessage("/gas/C2H5OH", None, [gm3v])
+    msg3 = oscbuildparse.OSCMessage("/gas/VOC", None, [gm5v])
+    msg4 = oscbuildparse.OSCMessage("/gas/CO", None, [gm7v])
     bun = oscbuildparse.OSCBundle(oscbuildparse.OSC_IMMEDIATELY ,
-                        [msg1, msg2, msg3])
+                        [msg1, msg2, msg3, msg4])
     osc_send(bun, "touchdesigner")
-    # …
 
-# Properly close the system.
-osc_terminate()
+if __name__ == "__main__":
+    try:
+        while True:
+            main()
+            
+    except KeyboardInterrupt:
+        print("Keyboard interrupt")
+    finally:
+        print('Program finished')
+        g.close()
+        osc_terminate()

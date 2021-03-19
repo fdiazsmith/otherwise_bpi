@@ -34,15 +34,15 @@ def main():
     osc_startup()
 
     # Make client channels to send packets.
-    osc_udp_client("192.168.1.133", 10000, "touchdesigner")
+    osc_udp_client("192.168.1.133", 10000, "someother123")
 
     # Build a simple message and send it.
     # msg = oscbuildparse.OSCMessage("/test/me", None, [ gm1v])
-    # osc_send(msg, "touchdesigner")
+    # osc_send(msg, "someother123")
 
     # # Build a message with autodetection of data types, and send it.
     # msg = oscbuildparse.OSCMessage("/test/me", None, [gm3v])
-    # osc_send(msg, "touchdesigner")
+    # osc_send(msg, "someother123")
 
     # Buils a complete bundle, and postpone its executions by 10 sec.
     exectime = time.time() + 30   # execute in 10 seconds
@@ -52,7 +52,7 @@ def main():
     msg4 = oscbuildparse.OSCMessage("/gas/CO", None, [gm7v])
     bun = oscbuildparse.OSCBundle(oscbuildparse.OSC_IMMEDIATELY ,
                         [msg1, msg2, msg3, msg4])
-    osc_send(bun, "touchdesigner")
+    osc_send(bun, "someother123")
     # print("NO2:{: <20}    C2H5OH:{: <20}   VOC:{: <20}   CO:{: <20}".format(gm1v,gm3v,gm5v,gm7v))
     osc_process()
 
