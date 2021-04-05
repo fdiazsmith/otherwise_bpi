@@ -1,5 +1,6 @@
 from math import pow
 from time import sleep
+from smbus2 import SMBus
 
 class Gas:
     DEFAULT_I2C_ADDR = 0x08
