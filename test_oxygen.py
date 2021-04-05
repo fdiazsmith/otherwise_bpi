@@ -16,23 +16,18 @@
 import sys
 import time
 import math
-sys.path.append("../..")
-from DFRobot_Oxygen import *
+# sys.path.append("../..")
+from Oxygen_sensor import *
 
-COLLECT_NUMBER   = 10              # collect number, the collection range is 1-100
-IIC_MODE         = 0x01            # default use IIC1
-'''
-   # The first  parameter is to select iic0 or iic1
-   # The second parameter is the iic device address
-   # The default address for iic is ADDRESS_3
-   # ADDRESS_0                 = 0x70
-   # ADDRESS_1                 = 0x71
-   # ADDRESS_2                 = 0x72
-   # ADDRESS_3                 = 0x73
-'''
-oxygen = DFRobot_Oxygen_IIC(IIC_MODE ,ADDRESS_3)
-while(1):
 
-  oxygen_data = oxygen.get_oxygen_data(COLLECT_NUMBER);
-  print("Oxygen concentration is %4.2f %%vol"%oxygen_data)
-  time.sleep(1)
+oxygen = DFRobot_Oxygen_IIC()
+
+try:
+    while 1:
+      oxygen_data = oxygen.get_oxygen_data()
+      print("Oxygen concentration is %4.2f %%vol"%oxygen_data)
+      time.sleep(1)
+# If keyboard Interrupt (CTRL-C) is pressed
+except KeyboardInterrupt:
+    print("keyboard interrupt")
+    pass       # Go to next line

@@ -1,10 +1,10 @@
 from time import sleep  
 from LED_Light.LED_Light import LED_Light
 
+light = LED_Light()
+
 try:
     while 1:  
-        light = LED_Light()
-        
         for x in range(100):    # This Loop will run 100 times
             light.set_brightness(x/100) # Change duty cycle
             sleep(0.01)         # Delay of 10mS

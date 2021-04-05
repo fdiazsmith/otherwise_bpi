@@ -13,6 +13,7 @@
 import time
 import smbus
 import os
+import Oxygen_sensor.variables as v
            
 ADDRESS_0                 = 0x70           # iic slave Address
 ADDRESS_1                 = 0x71
@@ -61,7 +62,7 @@ class DFRobot_Oxygen(object):
     @param collectnum Collect the number
     @return  Oxygen concentration, (units %)
   '''
-  def get_oxygen_data(self ,collectnum):
+  def get_oxygen_data(self ,collectnum = v.COLLECT_NUMBER):
     self.get_flash()
     if collectnum > 0:
       for num in range(collectnum ,1 ,-1):
@@ -90,7 +91,7 @@ class DFRobot_Oxygen(object):
   @brief An example of an IIC interface module
 '''
 class DFRobot_Oxygen_IIC(DFRobot_Oxygen): 
-  def __init__(self ,bus ,addr):
+  def __init__(self ,bus = v.IIC_MODE,addr = v.ADDRESS_3):
     self.__addr = addr;
     super(DFRobot_Oxygen_IIC, self).__init__(bus)
 
