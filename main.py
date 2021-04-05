@@ -1,4 +1,4 @@
-from time import sleep  
+import time
 import math
 import random
 
@@ -10,7 +10,7 @@ from OSC.client import Client
     
 
 if __name__ == "__main__":
-
+    now = time.time()
     oxygen = DFRobot_Oxygen_IIC()
     osc_server = Server()
     osc_client = Client()
@@ -18,9 +18,13 @@ if __name__ == "__main__":
     try:
         while True:
             # loopforever
-            oxygen_data = oxygen.get_oxygen_data()
-            osc_client.send_message("/filter", random.random())
-            time.sleep(1)
+            
+            if time.time() - now > 1:
+                print("seconds")
+                oxygen_data = oxygen.get_oxygen_data()
+                osc_client.send_message("/oxygen", oxygen_data )
+                now = time.time()
+                
     except KeyboardInterrupt:
         print("Keyboard interrupt")
         osc_server.close()
