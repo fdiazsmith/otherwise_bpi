@@ -1,3 +1,6 @@
+'''
+ (nice library)[https://github.com/pimoroni/as7262-python/blob/master/library/as7262/__init__.py]
+'''
 import Gas_sensors.variables as v
 import smbus
 import os
