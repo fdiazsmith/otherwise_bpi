@@ -1,0 +1,1 @@
+from Temp_and_humidity.Sparkfun_Temp_Humidity import Temp_Humidity
