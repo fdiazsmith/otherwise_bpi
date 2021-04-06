@@ -11,8 +11,8 @@ gases = Multichannel_Gas_I2C()
 
 try:
     while 1:
-      co2_data = gases.co2()
-    #   print("c02 concentration is %4.2f %%vol"%co2_data)
+      print(" raw is {} ".format(gases.get_no2()))
+      # print(" vol is {} ".format(gases.get_all_vol()))
       time.sleep(1)
 # If keyboard Interrupt (CTRL-C) is pressed
 except KeyboardInterrupt:
