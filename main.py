@@ -16,7 +16,7 @@ from as7262 import AS7262
 if __name__ == "__main__":
     now = time.time()
     oxygen = DFRobot_Oxygen_IIC()
-    osc_server = Server()
+    # osc_server = Server()
     osc_client = Client()
 
     gas_sensor = Multichannel_Gas_I2C()
@@ -27,20 +27,21 @@ if __name__ == "__main__":
     as7262.set_integration_time(17.857)
     as7262.set_measurement_mode(2)
     as7262.set_illumination_led(1)
-    
+    print('Program running')
     # setup stuff that should happen once
     try:
         while True:
             # loopforever
             
             if time.time() - now > 1:
-                print("seconds")
+               
                 oxygen_data = oxygen.get_oxygen_data()
                 gases = gas_sensor.get_all_vol()
 
                 for gas in gases:
                     # do this with bundle eventually
                     osc_client.send_message("/{}".format(gas), gases[gas] )
+                osc_client.send_message("/O2", oxygen_data )
                 
                 values = as7262.get_calibrated_values()
 
@@ -60,7 +61,7 @@ if __name__ == "__main__":
         print("Keyboard interrupt")
         as7262.set_measurement_mode(3)
         as7262.set_illumination_led(0)
-        osc_server.close()
+        # osc_server.close()
     finally:
         print('Program finished')
 

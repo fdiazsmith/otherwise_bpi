@@ -5,6 +5,7 @@ import Gas_sensors.variables as v
 
 ADDRESS_0                 = 0x27           # i2c Address
 
+
 class Temp_Humidity_Data:
     """Store the 6 band spectral values."""
 
@@ -24,15 +25,23 @@ class Sparkfun_Temp(object):
 
     def get_humidity_temperature(self):
         output = self.raw_reg(0x00,4)
+        # output = [30,181,92,88]
         Hum_H = output[0]
         Hum_L = output[1]
         Temp_H = output[2]
         Temp_L = output[3]
+        Hum_H = Hum_H & 0x3f
         hum = Hum_H << 8 | Hum_L
         temp = Temp_H << 8 | Temp_L
         # temp = temp /4
+        print(output)
+        print(bin(Hum_H), bin(0x3f))
+        print(bin(Hum_H), bin(Hum_L))
+        print(bin(Hum_H<<8), bin(Hum_L)) 
+        print(bin(Hum_H<<8 | Hum_L))
+        temp = temp * .01007 - 40
+        hum = hum *.0061
         return Temp_Humidity_Data(temp, hum)
-        # print("temp  {} humidity {}".format(temp, hum))
         
     
 

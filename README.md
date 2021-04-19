@@ -14,3 +14,4 @@ It contains the python code to read differenc gases and color from a plant and s
 
 # breadcrumbs
 - [making and I2C library ](-[Might need to know more about this](https://learn.adafruit.com/porting-an-arduino-library-to-circuitpython-vl6180x-distance-sensor?view=all)
+
