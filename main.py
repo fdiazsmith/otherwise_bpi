@@ -16,7 +16,7 @@ from as7262 import AS7262
 if __name__ == "__main__":
     now = time.time()
     oxygen = DFRobot_Oxygen_IIC()
-    # osc_server = Server()
+    osc_server = Server()
     osc_client = Client()
 
     gas_sensor = Multichannel_Gas_I2C()
@@ -45,9 +45,7 @@ if __name__ == "__main__":
                 
                 values = as7262.get_calibrated_values()
 
-                # for v in values:
-                #     print( v )
-                # print( values['red'] )
+
                 osc_client.send_message("/Red", values.red )
                 osc_client.send_message("/Orange", values.orange )
                 osc_client.send_message("/Yellow", values.yellow )
@@ -61,7 +59,7 @@ if __name__ == "__main__":
         print("Keyboard interrupt")
         as7262.set_measurement_mode(3)
         as7262.set_illumination_led(0)
-        # osc_server.close()
+        osc_server.close()
     finally:
         print('Program finished')
 
